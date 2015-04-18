@@ -1582,7 +1582,14 @@ public class Entity implements IEntity {
 
 				{ /* Draw children in front of this Entity. */
 					for(; i < childCount; i++) {
-						children.get(i).onDraw(pGLState, pCamera);
+                        try {
+                            // try catch add by bitArcher
+                            children.get(i).onDraw(pGLState, pCamera);
+                        }
+                        catch(IndexOutOfBoundsException indexOutOfBoundsException)
+                        {
+                            // some children may have been deleted
+                        }
 					}
 				}
 			}
