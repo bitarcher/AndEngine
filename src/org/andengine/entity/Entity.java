@@ -1608,10 +1608,17 @@ public class Entity implements IEntity {
 		if((this.mChildren != null) && !this.mChildrenIgnoreUpdate) {
 			final SmartList<IEntity> children = this.mChildren;
 			final int entityCount = children.size();
-			for(int i = 0; i < entityCount; i++) {
-				final IEntity child = children.get(i);
-				child.onUpdate(pSecondsElapsed);
-			}
+            try {
+                // try catch add by bitArcher
+                for (int i = 0; i < entityCount; i++) {
+                    final IEntity child = children.get(i);
+                    child.onUpdate(pSecondsElapsed);
+                }
+            }
+            catch (IndexOutOfBoundsException indexOutOfBoundsException)
+            {
+                // a child node may have been deleted
+            }
 		}
 	}
 
